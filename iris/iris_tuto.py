@@ -1,3 +1,4 @@
+# coding:utf-8
 '''
 
 Requirements:
@@ -34,20 +35,22 @@ import caffe.draw
 
 def load_data():
     '''
+    return:dict
     Load Iris Data set
     '''
     data = load_iris()
-    print(data.data)
-    print(data.target)
-    targets = np.zeros((len(data.target), 3))
+    print "data shape:", data.data.shape # 150*4
+    print "target shape:",data.target.shape
+    targets = np.zeros((len(data.target), 3)) # target: 150个整数, 150 * 3
+    # targets的列数为3（标签或类的个数），把整数变成one-hot格式，比如2->[0 0 1]
     for count, target in enumerate(data.target):
         targets[count][target]= 1    
-    print(targets)
+    print(targets) 
     
     new_data = {}
     #new_data['input'] = data.data
-    new_data['input'] = np.reshape(data.data, (150,1,1,4))
-    new_data['output'] = targets
+    new_data['input'] = np.reshape(data.data, (150,1,1,4)) # 150个样本，每个样本的特征维度为: 1*1*4
+    new_data['output'] = targets # 150个样本目标，150 * 3 
     #print(new_data['input'].shape)
     #new_data['input'] = np.random.random((150, 1, 1, 4))
     #print(new_data['input'].shape)   
@@ -59,6 +62,9 @@ def load_data():
 def save_data_as_hdf5(hdf5_data_filename, data):
     '''
     HDF5 is one of the data formats Caffe accepts
+    params:
+        hdf5_data_filename: str
+        data: dict
     '''
     with h5py.File(hdf5_data_filename, 'w') as f:
         f['data'] = data['input'].astype(np.float32)
@@ -96,11 +102,11 @@ def get_predicted_output(deploy_prototxt_filename, caffemodel_filename, input, n
     #print(input)
     #print(input.shape)
     out = net.forward(data=input)
-    #print('out: {0}'.format(out))
+    print('forward out: {0}'.format(out))
     return out[net.outputs[0]]
 
 
-import google.protobuf 
+import google.protobuf.text_format
 def print_network(prototxt_filename, caffemodel_filename):
     '''
     Draw the ANN architecture
@@ -166,7 +172,7 @@ def get_accuracy(true_outputs, predicted_outputs):
             predicted_output_binary.append(predicted_output)
             
         print('accuracy: {0}'.format(sklearn.metrics.accuracy_score(true_outputs[:, output_number], predicted_output_binary)))
-        print(sklearn.metrics.confusion_matrix(true_outputs[:, output_number], predicted_output_binary))
+        print("confusion matrix:{0}".format(sklearn.metrics.confusion_matrix(true_outputs[:, output_number], predicted_output_binary)))
     
     
 def main():
@@ -186,18 +192,20 @@ def main():
     
     # Prepare data
     data = load_data()
-    print(data)
+    print("input: {0} output: {1} ".format(data["input"][0:10],data["output"][10]))
     train_data = data
     test_data = data
+    print "generate hdf5 file:", hdf5_train_data_filename
     save_data_as_hdf5(hdf5_train_data_filename, data)
+    print "generate hdf5 file:", hdf5_test_data_filename
     save_data_as_hdf5(hdf5_test_data_filename, data)
     
     # Train network
-    train(solver_prototxt_filename)
+    # train(solver_prototxt_filename)
         
     # Get predicted outputs
     input = np.array([[ 5.1,  3.5,  1.4,  0.2]])
-    print(get_predicted_output(deploy_prototxt_filename, caffemodel_filename, input))
+    print("get predicted output: {0}".format(get_predicted_output(deploy_prototxt_filename, caffemodel_filename, input)))
     input = np.array([[[[ 5.1,  3.5,  1.4,  0.2]]],[[[ 5.9,  3. ,  5.1,  1.8]]]])
     #print(get_predicted_output(deploy_prototxt_batch2_filename, caffemodel_filename, input))
     

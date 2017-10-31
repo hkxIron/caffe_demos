@@ -29,9 +29,6 @@ layer {
   }
 }
 
-
-
-
 layer {
   name: "ip1"
   type: "InnerProduct"
@@ -101,8 +98,6 @@ layer {
   }
 }
 
-
-
 layer {
   name: "ip3"
   type: "InnerProduct"
@@ -134,12 +129,6 @@ layer {
     dropout_ratio: 0.3
   }
 }
-
-
-
-
-
-
 
 layer {
   name: "loss"

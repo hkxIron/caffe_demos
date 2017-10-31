@@ -1,0 +1,930 @@
+/home/hkx/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:41: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1101 00:08:30.054615 12715 _caffe.cpp:139] DEPRECATION WARNING - deprecated use of Python interface
+W1101 00:08:30.054641 12715 _caffe.cpp:140] Use this instead (with the named "weights" parameter):
+W1101 00:08:30.054644 12715 _caffe.cpp:142] Net('iris_deploy.prototxt', 1, weights='iris__iter_1000000.caffemodel')
+I1101 00:08:30.055661 12715 upgrade_proto.cpp:67] Attempting to upgrade input file specified using deprecated input fields: iris_deploy.prototxt
+I1101 00:08:30.055676 12715 upgrade_proto.cpp:70] Successfully upgraded file specified using deprecated input fields.
+W1101 00:08:30.055680 12715 upgrade_proto.cpp:72] Note that future Caffe releases will only support input layers and not input fields.
+I1101 00:08:30.055753 12715 net.cpp:51] Initializing net from parameters: 
+name: "IrisNet"
+state {
+  phase: TEST
+  level: 0
+}
+layer {
+  name: "input"
+  type: "Input"
+  top: "data"
+  input_param {
+    shape {
+      dim: 1
+      dim: 1
+      dim: 1
+      dim: 4
+    }
+  }
+}
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "ip1"
+  top: "ip1"
+}
+layer {
+  name: "drop1"
+  type: "Dropout"
+  bottom: "ip1"
+  top: "ip1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "ip1"
+  top: "ip2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop2"
+  type: "Dropout"
+  bottom: "ip2"
+  top: "ip2"
+  dropout_param {
+    dropout_ratio: 0.4
+  }
+}
+layer {
+  name: "ip3"
+  type: "InnerProduct"
+  bottom: "ip2"
+  top: "ip3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop3"
+  type: "Dropout"
+  bottom: "ip3"
+  top: "ip3"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+I1101 00:08:30.055780 12715 layer_factory.hpp:77] Creating layer input
+I1101 00:08:30.055789 12715 net.cpp:84] Creating Layer input
+I1101 00:08:30.055796 12715 net.cpp:380] input -> data
+I1101 00:08:30.055811 12715 net.cpp:122] Setting up input
+I1101 00:08:30.055819 12715 net.cpp:129] Top shape: 1 1 1 4 (4)
+I1101 00:08:30.055821 12715 net.cpp:137] Memory required for data: 16
+I1101 00:08:30.055825 12715 layer_factory.hpp:77] Creating layer ip1
+I1101 00:08:30.055831 12715 net.cpp:84] Creating Layer ip1
+I1101 00:08:30.055835 12715 net.cpp:406] ip1 <- data
+I1101 00:08:30.055840 12715 net.cpp:380] ip1 -> ip1
+I1101 00:08:30.056249 12715 net.cpp:122] Setting up ip1
+I1101 00:08:30.056258 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.056262 12715 net.cpp:137] Memory required for data: 216
+I1101 00:08:30.056272 12715 layer_factory.hpp:77] Creating layer relu1
+I1101 00:08:30.056277 12715 net.cpp:84] Creating Layer relu1
+I1101 00:08:30.056282 12715 net.cpp:406] relu1 <- ip1
+I1101 00:08:30.056285 12715 net.cpp:367] relu1 -> ip1 (in-place)
+I1101 00:08:30.056293 12715 net.cpp:122] Setting up relu1
+I1101 00:08:30.056296 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.056299 12715 net.cpp:137] Memory required for data: 416
+I1101 00:08:30.056303 12715 layer_factory.hpp:77] Creating layer drop1
+I1101 00:08:30.056308 12715 net.cpp:84] Creating Layer drop1
+I1101 00:08:30.056318 12715 net.cpp:406] drop1 <- ip1
+I1101 00:08:30.056322 12715 net.cpp:367] drop1 -> ip1 (in-place)
+I1101 00:08:30.056329 12715 net.cpp:122] Setting up drop1
+I1101 00:08:30.056332 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.056335 12715 net.cpp:137] Memory required for data: 616
+I1101 00:08:30.056339 12715 layer_factory.hpp:77] Creating layer ip2
+I1101 00:08:30.056344 12715 net.cpp:84] Creating Layer ip2
+I1101 00:08:30.056346 12715 net.cpp:406] ip2 <- ip1
+I1101 00:08:30.056351 12715 net.cpp:380] ip2 -> ip2
+I1101 00:08:30.056378 12715 net.cpp:122] Setting up ip2
+I1101 00:08:30.056383 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.056386 12715 net.cpp:137] Memory required for data: 816
+I1101 00:08:30.056392 12715 layer_factory.hpp:77] Creating layer drop2
+I1101 00:08:30.056396 12715 net.cpp:84] Creating Layer drop2
+I1101 00:08:30.056399 12715 net.cpp:406] drop2 <- ip2
+I1101 00:08:30.056404 12715 net.cpp:367] drop2 -> ip2 (in-place)
+I1101 00:08:30.056409 12715 net.cpp:122] Setting up drop2
+I1101 00:08:30.056413 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.056416 12715 net.cpp:137] Memory required for data: 1016
+I1101 00:08:30.056419 12715 layer_factory.hpp:77] Creating layer ip3
+I1101 00:08:30.056423 12715 net.cpp:84] Creating Layer ip3
+I1101 00:08:30.056427 12715 net.cpp:406] ip3 <- ip2
+I1101 00:08:30.056454 12715 net.cpp:380] ip3 -> ip3
+I1101 00:08:30.056468 12715 net.cpp:122] Setting up ip3
+I1101 00:08:30.056474 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:30.056478 12715 net.cpp:137] Memory required for data: 1028
+I1101 00:08:30.056483 12715 layer_factory.hpp:77] Creating layer drop3
+I1101 00:08:30.056488 12715 net.cpp:84] Creating Layer drop3
+I1101 00:08:30.056491 12715 net.cpp:406] drop3 <- ip3
+I1101 00:08:30.056495 12715 net.cpp:367] drop3 -> ip3 (in-place)
+I1101 00:08:30.056501 12715 net.cpp:122] Setting up drop3
+I1101 00:08:30.056505 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:30.056509 12715 net.cpp:137] Memory required for data: 1040
+I1101 00:08:30.056511 12715 net.cpp:200] drop3 does not need backward computation.
+I1101 00:08:30.056514 12715 net.cpp:200] ip3 does not need backward computation.
+I1101 00:08:30.056519 12715 net.cpp:200] drop2 does not need backward computation.
+I1101 00:08:30.056521 12715 net.cpp:200] ip2 does not need backward computation.
+I1101 00:08:30.056524 12715 net.cpp:200] drop1 does not need backward computation.
+I1101 00:08:30.056527 12715 net.cpp:200] relu1 does not need backward computation.
+I1101 00:08:30.056530 12715 net.cpp:200] ip1 does not need backward computation.
+I1101 00:08:30.056533 12715 net.cpp:200] input does not need backward computation.
+I1101 00:08:30.056536 12715 net.cpp:242] This network produces output ip3
+I1101 00:08:30.056543 12715 net.cpp:255] Network initialization done.
+I1101 00:08:30.057013 12715 net.cpp:744] Ignoring source layer iris
+I1101 00:08:30.057029 12715 net.cpp:744] Ignoring source layer loss
+W1101 00:08:30.282718 12715 _caffe.cpp:139] DEPRECATION WARNING - deprecated use of Python interface
+W1101 00:08:30.282739 12715 _caffe.cpp:140] Use this instead (with the named "weights" parameter):
+W1101 00:08:30.282743 12715 _caffe.cpp:142] Net('iris_train_test.prototxt', 1, weights='iris__iter_1000000.caffemodel')
+I1101 00:08:30.282861 12715 net.cpp:294] The NetState phase (1) differed from the phase (0) specified by a rule in layer iris
+I1101 00:08:30.282927 12715 net.cpp:51] Initializing net from parameters: 
+name: "IrisNet"
+state {
+  phase: TEST
+  level: 0
+}
+layer {
+  name: "iris"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TEST
+  }
+  hdf5_data_param {
+    source: "iris_test_data.txt"
+    batch_size: 1
+  }
+}
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "ip1"
+  top: "ip1"
+}
+layer {
+  name: "drop1"
+  type: "Dropout"
+  bottom: "ip1"
+  top: "ip1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "ip1"
+  top: "ip2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop2"
+  type: "Dropout"
+  bottom: "ip2"
+  top: "ip2"
+  dropout_param {
+    dropout_ratio: 0.4
+  }
+}
+layer {
+  name: "ip3"
+  type: "InnerProduct"
+  bottom: "ip2"
+  top: "ip3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop3"
+  type: "Dropout"
+  bottom: "ip3"
+  top: "ip3"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+layer {
+  name: "loss"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "ip3"
+  bottom: "label"
+  top: "loss"
+}
+I1101 00:08:30.282958 12715 layer_factory.hpp:77] Creating layer iris
+I1101 00:08:30.282968 12715 net.cpp:84] Creating Layer iris
+I1101 00:08:30.282971 12715 net.cpp:380] iris -> data
+I1101 00:08:30.282981 12715 net.cpp:380] iris -> label
+I1101 00:08:30.282987 12715 hdf5_data_layer.cpp:80] Loading list of HDF5 filenames from: iris_test_data.txt
+I1101 00:08:30.282999 12715 hdf5_data_layer.cpp:94] Number of HDF5 files: 1
+I1101 00:08:30.283221 12715 hdf5.cpp:32] Datatype class: H5T_FLOAT
+I1101 00:08:30.283365 12715 net.cpp:122] Setting up iris
+I1101 00:08:30.283377 12715 net.cpp:129] Top shape: 1 1 1 4 (4)
+I1101 00:08:30.283382 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:30.283385 12715 net.cpp:137] Memory required for data: 28
+I1101 00:08:30.283390 12715 layer_factory.hpp:77] Creating layer ip1
+I1101 00:08:30.283397 12715 net.cpp:84] Creating Layer ip1
+I1101 00:08:30.283401 12715 net.cpp:406] ip1 <- data
+I1101 00:08:30.283407 12715 net.cpp:380] ip1 -> ip1
+I1101 00:08:30.283424 12715 net.cpp:122] Setting up ip1
+I1101 00:08:30.283430 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.283433 12715 net.cpp:137] Memory required for data: 228
+I1101 00:08:30.283442 12715 layer_factory.hpp:77] Creating layer relu1
+I1101 00:08:30.283447 12715 net.cpp:84] Creating Layer relu1
+I1101 00:08:30.283452 12715 net.cpp:406] relu1 <- ip1
+I1101 00:08:30.283455 12715 net.cpp:367] relu1 -> ip1 (in-place)
+I1101 00:08:30.283462 12715 net.cpp:122] Setting up relu1
+I1101 00:08:30.283465 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.283468 12715 net.cpp:137] Memory required for data: 428
+I1101 00:08:30.283471 12715 layer_factory.hpp:77] Creating layer drop1
+I1101 00:08:30.283476 12715 net.cpp:84] Creating Layer drop1
+I1101 00:08:30.283479 12715 net.cpp:406] drop1 <- ip1
+I1101 00:08:30.283484 12715 net.cpp:367] drop1 -> ip1 (in-place)
+I1101 00:08:30.283490 12715 net.cpp:122] Setting up drop1
+I1101 00:08:30.283494 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.283498 12715 net.cpp:137] Memory required for data: 628
+I1101 00:08:30.283500 12715 layer_factory.hpp:77] Creating layer ip2
+I1101 00:08:30.283505 12715 net.cpp:84] Creating Layer ip2
+I1101 00:08:30.283509 12715 net.cpp:406] ip2 <- ip1
+I1101 00:08:30.283514 12715 net.cpp:380] ip2 -> ip2
+I1101 00:08:30.283538 12715 net.cpp:122] Setting up ip2
+I1101 00:08:30.283543 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.283545 12715 net.cpp:137] Memory required for data: 828
+I1101 00:08:30.283552 12715 layer_factory.hpp:77] Creating layer drop2
+I1101 00:08:30.283556 12715 net.cpp:84] Creating Layer drop2
+I1101 00:08:30.283560 12715 net.cpp:406] drop2 <- ip2
+I1101 00:08:30.283563 12715 net.cpp:367] drop2 -> ip2 (in-place)
+I1101 00:08:30.283568 12715 net.cpp:122] Setting up drop2
+I1101 00:08:30.283573 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:30.283576 12715 net.cpp:137] Memory required for data: 1028
+I1101 00:08:30.283578 12715 layer_factory.hpp:77] Creating layer ip3
+I1101 00:08:30.283583 12715 net.cpp:84] Creating Layer ip3
+I1101 00:08:30.283586 12715 net.cpp:406] ip3 <- ip2
+I1101 00:08:30.283591 12715 net.cpp:380] ip3 -> ip3
+I1101 00:08:30.283607 12715 net.cpp:122] Setting up ip3
+I1101 00:08:30.283612 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:30.283615 12715 net.cpp:137] Memory required for data: 1040
+I1101 00:08:30.283622 12715 layer_factory.hpp:77] Creating layer drop3
+I1101 00:08:30.283627 12715 net.cpp:84] Creating Layer drop3
+I1101 00:08:30.283629 12715 net.cpp:406] drop3 <- ip3
+I1101 00:08:30.283634 12715 net.cpp:367] drop3 -> ip3 (in-place)
+I1101 00:08:30.283639 12715 net.cpp:122] Setting up drop3
+I1101 00:08:30.283643 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:30.283646 12715 net.cpp:137] Memory required for data: 1052
+I1101 00:08:30.283649 12715 layer_factory.hpp:77] Creating layer loss
+I1101 00:08:30.283655 12715 net.cpp:84] Creating Layer loss
+I1101 00:08:30.283658 12715 net.cpp:406] loss <- ip3
+I1101 00:08:30.283663 12715 net.cpp:406] loss <- label
+I1101 00:08:30.283666 12715 net.cpp:380] loss -> loss
+I1101 00:08:30.283674 12715 net.cpp:122] Setting up loss
+I1101 00:08:30.283679 12715 net.cpp:129] Top shape: (1)
+I1101 00:08:30.283681 12715 net.cpp:132]     with loss weight 1
+I1101 00:08:30.283686 12715 net.cpp:137] Memory required for data: 1056
+I1101 00:08:30.283689 12715 net.cpp:198] loss needs backward computation.
+I1101 00:08:30.283694 12715 net.cpp:198] drop3 needs backward computation.
+I1101 00:08:30.283696 12715 net.cpp:198] ip3 needs backward computation.
+I1101 00:08:30.283699 12715 net.cpp:198] drop2 needs backward computation.
+I1101 00:08:30.283702 12715 net.cpp:198] ip2 needs backward computation.
+I1101 00:08:30.283705 12715 net.cpp:198] drop1 needs backward computation.
+I1101 00:08:30.283709 12715 net.cpp:198] relu1 needs backward computation.
+I1101 00:08:30.283711 12715 net.cpp:198] ip1 needs backward computation.
+I1101 00:08:30.283715 12715 net.cpp:200] iris does not need backward computation.
+I1101 00:08:30.283718 12715 net.cpp:242] This network produces output loss
+I1101 00:08:30.283725 12715 net.cpp:255] Network initialization done.
+W1101 00:08:40.158414 12715 _caffe.cpp:139] DEPRECATION WARNING - deprecated use of Python interface
+W1101 00:08:40.158443 12715 _caffe.cpp:140] Use this instead (with the named "weights" parameter):
+W1101 00:08:40.158447 12715 _caffe.cpp:142] Net('iris_deploy.prototxt', 1, weights='iris__iter_1000000.caffemodel')
+I1101 00:08:40.158545 12715 upgrade_proto.cpp:67] Attempting to upgrade input file specified using deprecated input fields: iris_deploy.prototxt
+I1101 00:08:40.158552 12715 upgrade_proto.cpp:70] Successfully upgraded file specified using deprecated input fields.
+W1101 00:08:40.158555 12715 upgrade_proto.cpp:72] Note that future Caffe releases will only support input layers and not input fields.
+I1101 00:08:40.158638 12715 net.cpp:51] Initializing net from parameters: 
+name: "IrisNet"
+state {
+  phase: TEST
+  level: 0
+}
+layer {
+  name: "input"
+  type: "Input"
+  top: "data"
+  input_param {
+    shape {
+      dim: 1
+      dim: 1
+      dim: 1
+      dim: 4
+    }
+  }
+}
+layer {
+  name: "ip1"
+  type: "InnerProduct"
+  bottom: "data"
+  top: "ip1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "ip1"
+  top: "ip1"
+}
+layer {
+  name: "drop1"
+  type: "Dropout"
+  bottom: "ip1"
+  top: "ip1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "ip2"
+  type: "InnerProduct"
+  bottom: "ip1"
+  top: "ip2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 50
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop2"
+  type: "Dropout"
+  bottom: "ip2"
+  top: "ip2"
+  dropout_param {
+    dropout_ratio: 0.4
+  }
+}
+layer {
+  name: "ip3"
+  type: "InnerProduct"
+  bottom: "ip2"
+  top: "ip3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  inner_product_param {
+    num_output: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layer {
+  name: "drop3"
+  type: "Dropout"
+  bottom: "ip3"
+  top: "ip3"
+  dropout_param {
+    dropout_ratio: 0.3
+  }
+}
+I1101 00:08:40.158682 12715 layer_factory.hpp:77] Creating layer input
+I1101 00:08:40.158692 12715 net.cpp:84] Creating Layer input
+I1101 00:08:40.158696 12715 net.cpp:380] input -> data
+I1101 00:08:40.158707 12715 net.cpp:122] Setting up input
+I1101 00:08:40.158715 12715 net.cpp:129] Top shape: 1 1 1 4 (4)
+I1101 00:08:40.158717 12715 net.cpp:137] Memory required for data: 16
+I1101 00:08:40.158721 12715 layer_factory.hpp:77] Creating layer ip1
+I1101 00:08:40.158726 12715 net.cpp:84] Creating Layer ip1
+I1101 00:08:40.158730 12715 net.cpp:406] ip1 <- data
+I1101 00:08:40.158735 12715 net.cpp:380] ip1 -> ip1
+I1101 00:08:40.158753 12715 net.cpp:122] Setting up ip1
+I1101 00:08:40.158758 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:40.158761 12715 net.cpp:137] Memory required for data: 216
+I1101 00:08:40.158771 12715 layer_factory.hpp:77] Creating layer relu1
+I1101 00:08:40.158776 12715 net.cpp:84] Creating Layer relu1
+I1101 00:08:40.158780 12715 net.cpp:406] relu1 <- ip1
+I1101 00:08:40.158784 12715 net.cpp:367] relu1 -> ip1 (in-place)
+I1101 00:08:40.158789 12715 net.cpp:122] Setting up relu1
+I1101 00:08:40.158794 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:40.158797 12715 net.cpp:137] Memory required for data: 416
+I1101 00:08:40.158800 12715 layer_factory.hpp:77] Creating layer drop1
+I1101 00:08:40.158805 12715 net.cpp:84] Creating Layer drop1
+I1101 00:08:40.158808 12715 net.cpp:406] drop1 <- ip1
+I1101 00:08:40.158812 12715 net.cpp:367] drop1 -> ip1 (in-place)
+I1101 00:08:40.158818 12715 net.cpp:122] Setting up drop1
+I1101 00:08:40.158823 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:40.158825 12715 net.cpp:137] Memory required for data: 616
+I1101 00:08:40.158828 12715 layer_factory.hpp:77] Creating layer ip2
+I1101 00:08:40.158834 12715 net.cpp:84] Creating Layer ip2
+I1101 00:08:40.158838 12715 net.cpp:406] ip2 <- ip1
+I1101 00:08:40.158843 12715 net.cpp:380] ip2 -> ip2
+I1101 00:08:40.158867 12715 net.cpp:122] Setting up ip2
+I1101 00:08:40.158872 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:40.158875 12715 net.cpp:137] Memory required for data: 816
+I1101 00:08:40.158927 12715 layer_factory.hpp:77] Creating layer drop2
+I1101 00:08:40.158937 12715 net.cpp:84] Creating Layer drop2
+I1101 00:08:40.158943 12715 net.cpp:406] drop2 <- ip2
+I1101 00:08:40.158951 12715 net.cpp:367] drop2 -> ip2 (in-place)
+I1101 00:08:40.158962 12715 net.cpp:122] Setting up drop2
+I1101 00:08:40.158967 12715 net.cpp:129] Top shape: 1 50 (50)
+I1101 00:08:40.158972 12715 net.cpp:137] Memory required for data: 1016
+I1101 00:08:40.158977 12715 layer_factory.hpp:77] Creating layer ip3
+I1101 00:08:40.158987 12715 net.cpp:84] Creating Layer ip3
+I1101 00:08:40.158991 12715 net.cpp:406] ip3 <- ip2
+I1101 00:08:40.158999 12715 net.cpp:380] ip3 -> ip3
+I1101 00:08:40.159015 12715 net.cpp:122] Setting up ip3
+I1101 00:08:40.159021 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:40.159024 12715 net.cpp:137] Memory required for data: 1028
+I1101 00:08:40.159030 12715 layer_factory.hpp:77] Creating layer drop3
+I1101 00:08:40.159036 12715 net.cpp:84] Creating Layer drop3
+I1101 00:08:40.159039 12715 net.cpp:406] drop3 <- ip3
+I1101 00:08:40.159044 12715 net.cpp:367] drop3 -> ip3 (in-place)
+I1101 00:08:40.159049 12715 net.cpp:122] Setting up drop3
+I1101 00:08:40.159054 12715 net.cpp:129] Top shape: 1 3 (3)
+I1101 00:08:40.159056 12715 net.cpp:137] Memory required for data: 1040
+I1101 00:08:40.159060 12715 net.cpp:200] drop3 does not need backward computation.
+I1101 00:08:40.159063 12715 net.cpp:200] ip3 does not need backward computation.
+I1101 00:08:40.159066 12715 net.cpp:200] drop2 does not need backward computation.
+I1101 00:08:40.159070 12715 net.cpp:200] ip2 does not need backward computation.
+I1101 00:08:40.159073 12715 net.cpp:200] drop1 does not need backward computation.
+I1101 00:08:40.159076 12715 net.cpp:200] relu1 does not need backward computation.
+I1101 00:08:40.159080 12715 net.cpp:200] ip1 does not need backward computation.
+I1101 00:08:40.159088 12715 net.cpp:200] input does not need backward computation.
+I1101 00:08:40.159091 12715 net.cpp:242] This network produces output ip3
+I1101 00:08:40.159099 12715 net.cpp:255] Network initialization done.
+I1101 00:08:40.159185 12715 net.cpp:744] Ignoring source layer iris
+I1101 00:08:40.159198 12715 net.cpp:744] Ignoring source layer loss
+data shape: (150, 4)
+target shape: (150,)
+[[ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 1.  0.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  1.  0.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]
+ [ 0.  0.  1.]]
+input: [[[[ 5.1  3.5  1.4  0.2]]]
+
+
+ [[[ 4.9  3.   1.4  0.2]]]
+
+
+ [[[ 4.7  3.2  1.3  0.2]]]
+
+
+ [[[ 4.6  3.1  1.5  0.2]]]
+
+
+ [[[ 5.   3.6  1.4  0.2]]]
+
+
+ [[[ 5.4  3.9  1.7  0.4]]]
+
+
+ [[[ 4.6  3.4  1.4  0.3]]]
+
+
+ [[[ 5.   3.4  1.5  0.2]]]
+
+
+ [[[ 4.4  2.9  1.4  0.2]]]
+
+
+ [[[ 4.9  3.1  1.5  0.1]]]] output: [ 1.  0.  0.] 
+generate hdf5 file: iris_train_data.hdf5
+generate hdf5 file: iris_test_data.hdf5
+forward out: {'ip3': array([[ 5.78503513, -2.75346684, -8.26038837]], dtype=float32)}
+get predicted output: [[ 5.78503513 -2.75346684 -8.26038837]]
+Draw ANN done!
+Draw ANN done!
+forward out: {'ip3': array([[ 5.78503513, -2.75346684, -8.26038837]], dtype=float32)}
+forward out: {'ip3': array([[ 4.84897852, -2.20024824, -7.28818417]], dtype=float32)}
+forward out: {'ip3': array([[ 5.27715778, -2.49477148, -7.62203884]], dtype=float32)}
+forward out: {'ip3': array([[ 4.6975646 , -2.15189528, -7.10035276]], dtype=float32)}
+forward out: {'ip3': array([[ 5.88003683, -2.85783172, -8.35593414]], dtype=float32)}
+forward out: {'ip3': array([[ 5.84398746, -2.92240644, -8.35103703]], dtype=float32)}
+forward out: {'ip3': array([[ 5.24991989, -2.59848547, -7.56784248]], dtype=float32)}
+forward out: {'ip3': array([[ 5.39052057, -2.52250862, -7.88234949]], dtype=float32)}
+forward out: {'ip3': array([[ 4.45293379, -2.02638841, -6.76928854]], dtype=float32)}
+forward out: {'ip3': array([[ 4.89474487, -2.16528964, -7.49358225]], dtype=float32)}
+forward out: {'ip3': array([[ 6.08006859, -2.89346409, -8.66215801]], dtype=float32)}
+forward out: {'ip3': array([[ 5.09830236, -2.38879633, -7.59738207]], dtype=float32)}
+forward out: {'ip3': array([[ 4.86495638, -2.16032457, -7.39549208]], dtype=float32)}
+forward out: {'ip3': array([[ 5.17574835, -2.43083644, -7.46437025]], dtype=float32)}
+forward out: {'ip3': array([[ 7.30514383, -3.60669708, -9.8471117 ]], dtype=float32)}
+forward out: {'ip3': array([[ 7.11550236, -3.68718886, -9.68824291]], dtype=float32)}
+forward out: {'ip3': array([[ 6.55890179, -3.34146261, -8.93455029]], dtype=float32)}
+forward out: {'ip3': array([[ 5.71499538, -2.7781496 , -8.07956505]], dtype=float32)}
+forward out: {'ip3': array([[ 5.94261456, -2.84163046, -8.57201958]], dtype=float32)}
+forward out: {'ip3': array([[ 5.96352148, -2.97950029, -8.44484615]], dtype=float32)}
+forward out: {'ip3': array([[ 5.1902914 , -2.35057306, -7.87989426]], dtype=float32)}
+forward out: {'ip3': array([[ 5.72899103, -2.88202906, -8.09863377]], dtype=float32)}
+forward out: {'ip3': array([[ 6.32011414, -3.21547532, -8.64916801]], dtype=float32)}
+forward out: {'ip3': array([[ 4.60465574, -2.28240561, -6.93242311]], dtype=float32)}
+forward out: {'ip3': array([[ 4.51492834, -2.0460999 , -7.15724611]], dtype=float32)}
+forward out: {'ip3': array([[ 4.45272303, -1.97932088, -7.0680747 ]], dtype=float32)}
+forward out: {'ip3': array([[ 5.02186871, -2.45741582, -7.36610985]], dtype=float32)}
+forward out: {'ip3': array([[ 5.65499115, -2.65548158, -8.19063854]], dtype=float32)}
+forward out: {'ip3': array([[ 5.67367887, -2.66502976, -8.16246891]], dtype=float32)}
+forward out: {'ip3': array([[ 4.72386408, -2.15811276, -7.19345284]], dtype=float32)}
+forward out: {'ip3': array([[ 4.59999704, -2.06648874, -7.09870481]], dtype=float32)}
+forward out: {'ip3': array([[ 5.39255953, -2.62948632, -7.78802586]], dtype=float32)}
+forward out: {'ip3': array([[ 6.6262393 , -3.29130888, -9.37280464]], dtype=float32)}
+forward out: {'ip3': array([[ 7.04878283, -3.54971004, -9.71604919]], dtype=float32)}
+forward out: {'ip3': array([[ 4.89474487, -2.16528964, -7.49358225]], dtype=float32)}
+forward out: {'ip3': array([[ 5.60905933, -2.65435743, -7.96610737]], dtype=float32)}
+forward out: {'ip3': array([[ 6.1668191 , -2.92901516, -8.67147064]], dtype=float32)}
+forward out: {'ip3': array([[ 4.89474487, -2.16528964, -7.49358225]], dtype=float32)}
+forward out: {'ip3': array([[ 4.79984093, -2.24310255, -7.07716608]], dtype=float32)}
+forward out: {'ip3': array([[ 5.44214678, -2.53678632, -7.95405245]], dtype=float32)}
+forward out: {'ip3': array([[ 5.8267231 , -2.86549687, -8.15615749]], dtype=float32)}
+forward out: {'ip3': array([[ 3.34078336, -1.54264069, -5.76032448]], dtype=float32)}
+forward out: {'ip3': array([[ 5.1013093 , -2.46213937, -7.41056442]], dtype=float32)}
+forward out: {'ip3': array([[ 4.94166994, -2.56286669, -7.17387772]], dtype=float32)}
+forward out: {'ip3': array([[ 5.13668585, -2.56266189, -7.6791234 ]], dtype=float32)}
+forward out: {'ip3': array([[ 4.72000933, -2.21276903, -7.03112793]], dtype=float32)}
+forward out: {'ip3': array([[ 5.87666368, -2.86948586, -8.47432423]], dtype=float32)}
+forward out: {'ip3': array([[ 5.04241705, -2.36963606, -7.40817213]], dtype=float32)}
+forward out: {'ip3': array([[ 6.02588892, -2.88168144, -8.59243107]], dtype=float32)}
+forward out: {'ip3': array([[ 5.41095543, -2.53036904, -7.85887909]], dtype=float32)}
+forward out: {'ip3': array([[-3.1169908 ,  0.49967599, -1.79314852]], dtype=float32)}
+forward out: {'ip3': array([[-2.90825224,  0.32055441, -1.4807874 ]], dtype=float32)}
+forward out: {'ip3': array([[-3.718997  ,  0.46103022, -1.26491392]], dtype=float32)}
+forward out: {'ip3': array([[-3.45139647,  0.23833179, -0.71969044]], dtype=float32)}
+forward out: {'ip3': array([[-3.82439923,  0.31122276, -0.91516876]], dtype=float32)}
+forward out: {'ip3': array([[-3.32718873,  0.26687813, -0.86330014]], dtype=float32)}
+forward out: {'ip3': array([[-3.24884582,  0.08682333, -0.98318464]], dtype=float32)}
+forward out: {'ip3': array([[-1.74640501,  0.29286817, -1.82712221]], dtype=float32)}
+forward out: {'ip3': array([[-3.28784227,  0.53767419, -1.54381502]], dtype=float32)}
+forward out: {'ip3': array([[-2.77688384, -0.01335954, -0.78812921]], dtype=float32)}
+forward out: {'ip3': array([[-2.63017249,  0.46884298, -1.30311525]], dtype=float32)}
+forward out: {'ip3': array([[-2.8034668 ,  0.19401328, -1.23423421]], dtype=float32)}
+forward out: {'ip3': array([[-3.0512774 ,  0.62979692, -1.63934851]], dtype=float32)}
+forward out: {'ip3': array([[-3.64543843,  0.28370404, -0.82563138]], dtype=float32)}
+forward out: {'ip3': array([[-1.65407431,  0.05170998, -2.04813623]], dtype=float32)}
+forward out: {'ip3': array([[-2.83067822,  0.4240174 , -1.80105746]], dtype=float32)}
+forward out: {'ip3': array([[-3.40380859, -0.16816607, -0.36986193]], dtype=float32)}
+forward out: {'ip3': array([[-2.42410517,  0.48885655, -1.91470611]], dtype=float32)}
+forward out: {'ip3': array([[ -4.83426237e+00,   6.78203553e-02,   3.25924158e-03]], dtype=float32)}
+forward out: {'ip3': array([[-2.59698749,  0.46668178, -1.56632304]], dtype=float32)}
+forward out: {'ip3': array([[-4.18783331, -0.64130872,  0.46276999]], dtype=float32)}
+forward out: {'ip3': array([[-2.57096815,  0.39560717, -1.70378125]], dtype=float32)}
+forward out: {'ip3': array([[-4.90588713,  0.07375467,  0.0608179 ]], dtype=float32)}
+forward out: {'ip3': array([[-3.43069911,  0.5272029 , -1.24169636]], dtype=float32)}
+forward out: {'ip3': array([[-2.85084558,  0.46494618, -1.69981825]], dtype=float32)}
+forward out: {'ip3': array([[-2.98147082,  0.43977001, -1.64981937]], dtype=float32)}
+forward out: {'ip3': array([[-3.91155601,  0.51457262, -1.17666018]], dtype=float32)}
+forward out: {'ip3': array([[-4.53798628,  0.01243965, -0.23651883]], dtype=float32)}
+forward out: {'ip3': array([[-3.53787112,  0.11426882, -0.70994645]], dtype=float32)}
+forward out: {'ip3': array([[-1.60917604,  0.27100718, -2.40490675]], dtype=float32)}
+forward out: {'ip3': array([[-2.60352087,  0.45996714, -1.50867867]], dtype=float32)}
+forward out: {'ip3': array([[-2.32314897,  0.49209669, -1.77100241]], dtype=float32)}
+forward out: {'ip3': array([[-2.44565225,  0.40245289, -1.68989038]], dtype=float32)}
+forward out: {'ip3': array([[-5.24446917, -0.39871398,  0.87624788]], dtype=float32)}
+forward out: {'ip3': array([[-3.44094634, -0.31438556, -0.12804902]], dtype=float32)}
+forward out: {'ip3': array([[-2.73366594, -0.0579601 , -1.12604952]], dtype=float32)}
+forward out: {'ip3': array([[-3.41840911,  0.40605983, -1.33676744]], dtype=float32)}
+forward out: {'ip3': array([[-4.04711723,  0.41674182, -0.85894543]], dtype=float32)}
+forward out: {'ip3': array([[-2.29799986,  0.23211062, -1.61528313]], dtype=float32)}
+forward out: {'ip3': array([[-3.07860136,  0.28507066, -0.98968053]], dtype=float32)}
+forward out: {'ip3': array([[-3.35472178,  0.32875192, -0.8420406 ]], dtype=float32)}
+forward out: {'ip3': array([[-3.25555491,  0.34132475, -1.13638997]], dtype=float32)}
+forward out: {'ip3': array([[-2.72955894,  0.44427255, -1.51352477]], dtype=float32)}
+forward out: {'ip3': array([[-1.91437817,  0.3612569 , -1.74630558]], dtype=float32)}
+forward out: {'ip3': array([[-3.01028967,  0.32778859, -1.09931636]], dtype=float32)}
+forward out: {'ip3': array([[-2.30458164,  0.29671785, -1.77491307]], dtype=float32)}
+forward out: {'ip3': array([[-2.63874841,  0.33061552, -1.41040969]], dtype=float32)}
+forward out: {'ip3': array([[-2.84632397,  0.43139869, -1.57995689]], dtype=float32)}
+forward out: {'ip3': array([[-0.97873801, -0.08257273, -2.34326363]], dtype=float32)}
+forward out: {'ip3': array([[-2.67561889,  0.34277704, -1.39212823]], dtype=float32)}
+forward out: {'ip3': array([[-7.32319784, -2.23773384,  3.16132498]], dtype=float32)}
+forward out: {'ip3': array([[-5.85020113, -1.12201703,  1.76866448]], dtype=float32)}
+forward out: {'ip3': array([[-6.87769318, -0.91328853,  1.81537545]], dtype=float32)}
+forward out: {'ip3': array([[-6.0823822 , -0.78753787,  1.54036725]], dtype=float32)}
+forward out: {'ip3': array([[-6.97096777, -1.49955094,  2.43601942]], dtype=float32)}
+forward out: {'ip3': array([[-7.89448214, -0.92414242,  2.13285351]], dtype=float32)}
+forward out: {'ip3': array([[-4.88729811, -1.11513865,  1.48324406]], dtype=float32)}
+forward out: {'ip3': array([[-7.04839611, -0.42865777,  1.43879092]], dtype=float32)}
+forward out: {'ip3': array([[-6.93411064, -0.68282169,  1.63715947]], dtype=float32)}
+forward out: {'ip3': array([[-6.96436977, -1.61349964,  2.41664505]], dtype=float32)}
+forward out: {'ip3': array([[-5.0940299 , -0.73366237,  0.9042666 ]], dtype=float32)}
+forward out: {'ip3': array([[-6.09698391, -0.78324735,  1.48011076]], dtype=float32)}
+forward out: {'ip3': array([[-6.29039621, -0.92863113,  1.63481796]], dtype=float32)}
+forward out: {'ip3': array([[-6.18992567, -1.37464881,  2.0861764 ]], dtype=float32)}
+forward out: {'ip3': array([[-6.64424562, -1.99974406,  2.71435022]], dtype=float32)}
+forward out: {'ip3': array([[-6.0466466 , -1.45916176,  1.99652994]], dtype=float32)}
+forward out: {'ip3': array([[-5.74642992, -0.56735885,  1.18141925]], dtype=float32)}
+forward out: {'ip3': array([[-6.96312428, -0.94354719,  1.84377587]], dtype=float32)}
+forward out: {'ip3': array([[-9.30642223, -1.47883558,  3.04312325]], dtype=float32)}
+forward out: {'ip3': array([[-5.65976429, -0.25244132,  0.86304379]], dtype=float32)}
+forward out: {'ip3': array([[-6.65962696, -1.31853998,  2.09423113]], dtype=float32)}
+forward out: {'ip3': array([[-5.55345535, -1.33193767,  1.81676853]], dtype=float32)}
+forward out: {'ip3': array([[-8.1418829 , -0.75413144,  2.03664827]], dtype=float32)}
+forward out: {'ip3': array([[-5.26460218, -0.45551538,  0.81943655]], dtype=float32)}
+forward out: {'ip3': array([[-6.11718082, -1.05895317,  1.72474563]], dtype=float32)}
+forward out: {'ip3': array([[-6.07144308, -0.28786066,  0.85721707]], dtype=float32)}
+forward out: {'ip3': array([[-4.93040562, -0.46894097,  0.65640008]], dtype=float32)}
+forward out: {'ip3': array([[-4.74799347, -0.56775963,  0.68211544]], dtype=float32)}
+forward out: {'ip3': array([[-6.78491402, -1.30897248,  2.19719458]], dtype=float32)}
+forward out: {'ip3': array([[-5.58844852,  0.1541391 ,  0.09941417]], dtype=float32)}
+forward out: {'ip3': array([[-7.06867504, -0.45815378,  1.42835343]], dtype=float32)}
+forward out: {'ip3': array([[-5.94410467, -0.26911649,  0.52415371]], dtype=float32)}
+forward out: {'ip3': array([[-6.97076893, -1.50450015,  2.42163181]], dtype=float32)}
+forward out: {'ip3': array([[-4.72988272,  0.01974742,  0.03007859]], dtype=float32)}
+forward out: {'ip3': array([[-5.78484726, -0.23141533,  0.95324659]], dtype=float32)}
+forward out: {'ip3': array([[-7.51687765, -0.96898025,  1.9841131 ]], dtype=float32)}
+forward out: {'ip3': array([[-6.36546612, -1.80072725,  2.41629791]], dtype=float32)}
+forward out: {'ip3': array([[-5.56350088, -0.62504828,  1.15755081]], dtype=float32)}
+forward out: {'ip3': array([[-4.58501911, -0.5932529 ,  0.63580453]], dtype=float32)}
+forward out: {'ip3': array([[-5.95972776, -0.78944576,  1.34785664]], dtype=float32)}
+forward out: {'ip3': array([[-6.86172152, -1.61476362,  2.41436529]], dtype=float32)}
+forward out: {'ip3': array([[-5.8910861, -1.0451386,  1.4630152]], dtype=float32)}
+forward out: {'ip3': array([[-5.85020113, -1.12201703,  1.76866448]], dtype=float32)}
+forward out: {'ip3': array([[-6.97479486, -1.49360049,  2.39247561]], dtype=float32)}
+forward out: {'ip3': array([[-6.86652994, -1.80967438,  2.5651288 ]], dtype=float32)}
+forward out: {'ip3': array([[-6.21877146, -1.24844813,  1.8324374 ]], dtype=float32)}
+forward out: {'ip3': array([[-5.95186043, -0.73882413,  1.36114943]], dtype=float32)}
+forward out: {'ip3': array([[-5.6695013 , -0.80317509,  1.33468044]], dtype=float32)}
+forward out: {'ip3': array([[-5.87026978, -1.57918119,  2.05460215]], dtype=float32)}
+forward out: {'ip3': array([[-5.11728954, -0.81110579,  1.18893802]], dtype=float32)}
+accuracy: 1.0
+confusion matrix:[[100   0]
+ [  0  50]]
+accuracy: 0.94
+confusion matrix:[[98  2]
+ [ 7 43]]
+accuracy: 0.973333333333
+confusion matrix:[[96  4]
+ [ 0 50]]
